@@ -1,10 +1,7 @@
 from flask import Flask, request, jsonify
 import pandas as pd
 import pickle
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
+
 
 with open('fraud_detection_model.pkl', 'rb') as file:
     pipeline = pickle.load(file)
@@ -22,6 +19,7 @@ def make_inference(new_data):
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json  # Get data from POST request
+    print('data:---', data)
     try:
         # Ensure new data is in the correct format
         if not isinstance(data, dict):
@@ -36,4 +34,4 @@ def predict():
 
 # Run the app
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run( debug=False)
